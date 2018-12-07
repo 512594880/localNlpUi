@@ -1,0 +1,8 @@
+#忽略node_modules目录
+node_modules/
+
+#不知道是什么鬼，不用同步
+.idea/
+
+.idea/workspace.xml
+.idea/workspace.xml

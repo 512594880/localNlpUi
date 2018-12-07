@@ -1,0 +1,117 @@
+用户权限: [当前阶段可在代码里模拟]
+1.可以分配工作给语料员
+2.可查看分配给自己的所有任务;
+3.可查看所有的任务列表;
+4.可查看所提出的错误列表;
+
+登录:
+语料员:[2,3,4]  派工员:[1,2,3,4]
+
+未登录:[4]
+
+=========================接口===========================
+1.用户登录的接口 2.用户退出登录的接口 (当前阶段可在代码里模拟)
+post
+/insight/correction/login
+参数:
+{
+	"username":"admin",
+	"password":"admin"
+}
+
+
+3.获得所有系统人员的接口
+/insight/correction/getAllProofreader
+
+
+4.获得所有待派工的数据列表的接口
+get
+/insight/correction/getAllTaskInfo
+返回:
+[
+{
+    "tag": "RPG_SLE_XWG",
+    "count": 3140,
+    "status": 0
+ }
+]
+
+5.查看一个任务的进度的接口
+get
+/insight/correction/getProgress?tag=xx
+
+
+
+6.分配员分配任务给语料员的接口
+post
+/insight/correction/dispatchTask
+{
+	"tag":"RPG_SLE_XWG",
+	"dispatchType":1,
+	"users":[1,2,3]
+}
+
+7.获得某语料员下所有任务的接口
+get
+insight/correction/getUserTask?user=3
+返回
+[
+  {
+    "_id": "580f13b29849bda8b4953109",
+    "type": "Task",
+    "userId": "3",
+    "recordId": "57dbb9a853de8444bf5df0a7",
+    "tag": "RPG_SLE_XWG",
+    "status": 0
+  }
+]
+
+8.语料员通过某任务id,查看该任务,并开始纠错的接口
+get
+/insight/correction/getNLP?recordId=b669d853736099850ddb34f4304188f9
+
+10.纠错完成,提交的接口(这个接口是否需要?)
+post
+/insight/correction/insertCorrection
+
+{
+    recordId:xx,
+    error_type:"",
+    sentence:"xxxx",
+    userName:"xxx",
+    version:"v1.0.0'
+}
+
+
+11.获得所有错误列表的接口
+post
+/correction/allCorrection
+{
+	"limit":1,
+	"status":["待处理"]
+}
+返回
+{
+  "total": 33,
+  "items": [
+    {
+      "_id": "581012cf9e9153181b0a50a8",
+      "username": "r",
+      "sentence": "出院后出现下列紧急情况请立即拨打120急救电话，尽快送到附近有诊疗条件的医院处理",
+      "version": "v1.0.0",
+      "error_type": "化验",
+      "recordId": "a9a6a41553331dcd07a60c81061051b5",
+      "type": "Correction",
+      "status": "待处理"
+    }
+  ]
+}
+
+12.更新错误状态
+
+/correction/updateCorrection
+post
+{
+    "id":"x",
+    "status":"已处理"
+}
